@@ -1,2 +1,4 @@
 node_modules/
-package.json
+.nyc_output/
+coverage/
+package-lock.json

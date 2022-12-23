@@ -1,19 +1,22 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
-const getToken = (req, res) => {
+const getToken = async(tokenData) => {
     const data = {
-        userName: "Prashant",
-        lastName: "Malakoti",
-        empId: "116066"
+        id: tokenData[0].id,
+        userName: tokenData[0].userName,
+        empId: tokenData[0].empId
     }
-    let token = jwt.sign(data, process.env.TOKEN_SECRET, {expiresIn : '1m'});
-    res.send(token);
+    return jwt.sign(data, process.env.TOKEN_SECRET, {expiresIn : '1h'});
 }
-const verifyToken = (req, res) => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlByYXNoYW50IiwibGFzdE5hbWUiOiJNYWxha290aSIsImVtcElkIjoiMTE2MDY2IiwiaWF0IjoxNjY4Njk5MzMyLCJleHAiOjE2Njg2OTkzOTJ9.79LMoRjesPRYIX_HTzaQStDNjViMHW3VTG8rTzDMlg8';
-    let user = jwt.verify(token, process.env.TOKEN_SECRET)
-    res.send(user);
+const verifyToken = async(req, res) => {
+    try{
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlByYXNoYW50IiwibGFzdE5hbWUiOiJNYWxha290aSIsImVtcElkIjoiMTE2MDY2IiwiaWF0IjoxNjY5NTYyMDU5LCJleHAiOjE2Njk1NjU2NTl9.7p8jKkGnXe-nXjzTmYH_hL516bOEHGJ8LGSV2-kESM0';
+        let user = jwt.verify(token, process.env.TOKEN_SECRET)
+        res.send(user);
+    } catch(err){
+        res.send({ error : err.message}, 401);
+    }
 }
 module.exports = {
     verifyToken,
