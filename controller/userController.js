@@ -21,10 +21,21 @@ const logIn = async (req, res) => {
     }
 }
 const getUser = async (req, res) => {
-    let userId = req.user.id;
+    let userId = req?.user?.id ?? req.query.empId;
     let responceData = await userModel.getUser(userId)
     res.send({ result: responceData });
 }
+const getAllUser = async (req, res) => {
+    let responceData = await userModel.getAllUser();
+    res.send({ result: responceData });
+}
+
+const deleteUser = async (req, res) => {
+    let userId = req?.user?.id ?? req.query.empId;
+    let responceData = await userModel.deleteUser(userId)
+    res.send({ result: responceData });
+}
+
 const addUser = async (req, res) => {
     try{
         let responceData = await userModel.addUser(req.body)
@@ -34,8 +45,20 @@ const addUser = async (req, res) => {
         res.send({error : err.message}, 500)
     }
 }
+const updateUser = async (req, res) => {
+    try{
+        let responceData = await userModel.updateUser(req.body)
+        res.send({ result: responceData });
+
+    } catch(err){
+        res.send({error : err.message}, 500)
+    }
+}
 module.exports = {
     logIn,
     getUser,
-    addUser
+    getAllUser,
+    deleteUser,
+    addUser,
+    updateUser
 }

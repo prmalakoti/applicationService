@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express()
 const port = process.env.PORT
-
+var cors = require('cors')
+app.use(cors());
 var middleware = require('./middleware/logger')
 var userRoutes = require('./routes/userRoutes');
 var tokenRoute = require('./routes/jwtToken');
