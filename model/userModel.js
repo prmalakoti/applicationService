@@ -1,8 +1,8 @@
 'use strict';
 const db = require('../config/dbConfig')
 
-const getLogin = async (userName, password) => {
-    let sql = `SELECT * FROM users WHERE userName = '${name}' AND password = '${password}'`;
+const getLogin = async (email, password) => {
+    let sql = `SELECT * FROM users WHERE email = "${email}" AND password = "${password}"`;
     return await db(sql);
 }
 const getUser = async (userId) => {

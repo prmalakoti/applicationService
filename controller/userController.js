@@ -9,7 +9,7 @@ const logIn = async (req, res) => {
         if(loginSchemaErr){
             return res.status(400).json({message : loginSchemaErr.message });
         }
-        let loginData = await userModel.getLogin(req.body.userName, req.body.password)
+        let loginData = await userModel.getLogin(req.body.email, req.body.password)
         if(loginData.length > 0){
             const jwtTokenData = await tokenGenerate.getToken(loginData)
             res.send({ result: loginData, token: jwtTokenData });
